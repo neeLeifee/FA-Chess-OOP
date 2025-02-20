@@ -1,8 +1,14 @@
 ﻿from string import ascii_uppercase as alph
 
+class Table():
+    def __init__(self,size): self.size = size
+    #я хз какие ещё могут быть полЯ у пОля. вообще какойто беспонтовый класс
+
+    def getSize(self):return(self.size)
+
 class Game():
     def __init__(self):
-        self.field_size = [8,8]
+        self.table = Table([8,8])
 
         self.pieces_list = {
             'wP' : '♙',  # пешка
@@ -73,7 +79,7 @@ class Game():
         #drawing first line of letters
         print("   ",
               end='')
-        for i in range(self.field_size[0]): print(alph[i]+'  ', end='')
+        for i in range(self.table.getSize()[0]): print(alph[i]+'  ', end='')
         print('\n','\n',
               sep='', end='')
 
@@ -81,24 +87,24 @@ class Game():
         #drawing numbers(i loop) and figures(j loop)
         #i - номер строки
         #j - номер столбца
-        for i in range(self.field_size[0]):
+        for i in range(self.table.getSize()[0]):
 
             print(i+1, '  ',
                   sep='',end='')
 
-            for j in range(self.field_size[1]):
+            for j in range(self.table.getSize()[1]):
                 tile_num = alph[j]+str(i+1)
 
                 #printing piece
-                if tile_num in self.white_positions:
+                if tile_num in self.white_positions:    #white pieces
                     current_piece_name = self.white_positions[self.white_positions.index(tile_num)-1]
                     print(self.pieces_list[current_piece_name[:2]], ' ',
                         sep='',end='')
-                elif tile_num in self.black_positions:
+                elif tile_num in self.black_positions:  #black pieces
                     current_piece_name = self.black_positions[self.black_positions.index(tile_num)-1]
                     print(self.pieces_list[current_piece_name[:2]], ' ',
                         sep='',end='')
-                else:
+                else:                                   #filling whats left with dots
                     print('. ',sep='',end='')
                     #print(tile_num,sep='',end='') #DEBUG: allows to see tile_num 
                 
@@ -112,7 +118,7 @@ class Game():
         #drawing second line of letters
         print("\n   ",
               end='')
-        for i in range(self.field_size[0]): print(alph[i]+'  ', end='')
+        for i in range(self.table.getSize()[0]): print(alph[i]+'  ', end='')
         
 
 class Piece():
@@ -124,11 +130,7 @@ class Piece():
 def main():
     game = Game()
     game.printField()
-    #print(string.ascii_uppercase)
-    #print('♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ♔ ')
-    #print('1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 ')
-    #print('a b c d e f g e a b c d e f g e a b ')
     
 
-
+    
 if __name__=="__main__":main()#lolnospaces
