@@ -29,14 +29,57 @@ class Piece():
         }
 
         self.skin = pieces_skins[self.color + self.type]
+
+        self.white_pawns_spawns = ['A2','B2','C2','D2','E2','F2','G2','H2']
+        self.black_pawns_spawns = ['A7','B7','C7','D7','E7','F7','G7','H7']
     
     def getPosition(self):
         return self.position
     def setPosition(self, position):
         self.position = position
-
     def getSkin(self):
         return self.skin
+
+    def possibleMoves(self):
+        possible_moves = []
+
+        match self.type:
+            case 'P':   # пешка
+                if self.color == 'w':
+                    if self.getPosition() in self.white_pawns_spawns:   # if pawn is at its spawn point
+                        possible_moves.append(self.position[0] + str(int(self.position[1])+2))
+
+                    possible_moves.append(self.position[0] + str(int(self.position[1])+1))
+                else:
+                    if self.getPosition() in self.black_pawns_spawns:   # if pawn is at its spawn point
+                        possible_moves.append(self.position[0] + str(int(self.position[1])-2))
+
+                    possible_moves.append(self.position[0] + str(int(self.position[1])-1))
+
+            case 'N':
+                pass
+
+            case 'B':
+                pass
+
+            case 'R':
+                pass
+
+            case 'Q':
+                pass
+
+            case 'K':
+                pass
+
+
+        # проверки на то чтобы не уходил на лимит доски
+        for i in possible_moves:
+            if int(i[1]) not in range(1,9):
+                possible_moves.pop(possible_moves.index(i))
+            if alph.index(i[0]) not in range(0,8):
+                possible_moves.pop(possible_moves.index(i))
+
+        return (possible_moves)
 
 class Game():
     def __init__(self):
@@ -46,6 +89,10 @@ class Game():
         self.black_score = 0
 
         self.setPieces()
+
+        self.printField()
+
+        print(self.black_figures[0].possibleMoves())
 
     def setPieces(self):
         # Документация наименования фигур
@@ -103,11 +150,13 @@ class Game():
 
     def printField(self):
         #drawing first line of letters
-        print("   ",
+        print("    ",
               end='')
         for i in range(self.table.getSize()[0]): print(alph[i]+'  ', end='')
-        print('\n','\n',
+        print('\n',
               sep='', end='')
+
+        print('  ',"_"*25)
 
         white_positions = []
         for figure in self.white_figures:
@@ -124,7 +173,7 @@ class Game():
         #j - номер столбца
         for i in range(self.table.getSize()[0]):
 
-            print(i+1, '  ',
+            print(i+1, ' | ',
                   sep='',end='')
 
             for j in range(self.table.getSize()[1]):
@@ -140,27 +189,30 @@ class Game():
                     print(current_piece, ' ',
                         sep='',end='')
                 else:                              #filling whats left with dots
-                    #print('. ',sep='',end='')
-                    print(tile_num,sep='',end='') #DEBUG: allows to see tile_num 
+                    print('. ',sep='',end='')
+                    #print(tile_num,sep='',end='') #DEBUG: allows to see tile_num 
                 
 
                 #printing space between tiles
                 print('',end=' ')#heheh did it the other way around B-)
 
-            print(i+1, '\n',
+            print('| ', i+1, '\n',
                   sep='',end='')
 
+
+        print('  ',"‾"*25)
+
         #drawing second line of letters
-        print("\n   ",
+        print("    ",
               end='')
         for i in range(self.table.getSize()[0]): print(alph[i]+'  ', end='')
+
+        print('\n')
         
 
 
 def main():
+    print()
     game = Game()
-    game.printField()
-    
-
     
 if __name__=="__main__":main()#lolnospaces
