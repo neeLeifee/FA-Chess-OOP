@@ -1,10 +1,18 @@
 ﻿from string import ascii_uppercase as alph
+from string import ascii_lowercase as lower_alph
+
+def convertPosition(pos):
+    if pos[0].lower() in lower_alph:
+        return str(lower_alph.index(pos[0].lower())) + str(int(pos[1])-1)
+    else:
+        return alph[int(pos[0])] + str(int(pos[1])+1)
 
 class Table():
     def __init__(self,size): self.size = size
     #я хз какие ещё могут быть полЯ у пОля. вообще какой-то беспонтовый класс
 
     def getSize(self):return(self.size)
+        
 
 class Piece():
     def __init__(self, color, type, position):
@@ -56,19 +64,19 @@ class Piece():
 
                     possible_moves.append(self.position[0] + str(int(self.position[1])-1))
 
-            case 'N':
+            case 'N':   # конь
                 pass
 
-            case 'B':
+            case 'B':   # слон
                 pass
 
-            case 'R':
+            case 'R':   # ладья
                 pass
 
-            case 'Q':
+            case 'Q':   # ферзь
                 pass
 
-            case 'K':
+            case 'K':   # король
                 pass
 
 
