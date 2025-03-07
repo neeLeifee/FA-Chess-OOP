@@ -1,11 +1,19 @@
 ﻿from string import ascii_uppercase as alph
 from string import ascii_lowercase as lower_alph
 
-def convertPosition(pos):
-    if pos[0].lower() in lower_alph:
-        return str(lower_alph.index(pos[0].lower())) + str(int(pos[1])-1)
-    else:
-        return alph[int(pos[0])] + str(int(pos[1])+1)
+def convertPosition(pos,mode):
+    # pos - position (str witn lenght of two)
+    # mode - 'hc' or 'ch'. 
+    #   hc - human to computer (B3 -> 12);
+    #   ch - computer to human (12 -> B3)
+    match mode:
+        case 'hc':
+            return str(lower_alph.index(pos[0].lower())) + str(int(pos[1])-1)
+        case 'ch':
+            return alph[int(pos[0])] + str(int(pos[1])+1)
+        case _:
+            return -1
+        
 
 class Table():
     def __init__(self,size): self.size = size
@@ -54,18 +62,59 @@ class Piece():
         match self.type:
             case 'P':   # пешка
                 if self.color == 'w':
-                    if self.getPosition() in self.white_pawns_spawns:   # if pawn is at its spawn point
+                    if self.position in self.white_pawns_spawns:   # if pawn is at its spawn point
                         possible_moves.append(self.position[0] + str(int(self.position[1])+2))
 
                     possible_moves.append(self.position[0] + str(int(self.position[1])+1))
                 else:
-                    if self.getPosition() in self.black_pawns_spawns:   # if pawn is at its spawn point
+                    if self.position in self.black_pawns_spawns:   # if pawn is at its spawn point
                         possible_moves.append(self.position[0] + str(int(self.position[1])-2))
 
                     possible_moves.append(self.position[0] + str(int(self.position[1])-1))
 
             case 'N':   # конь
-                pass
+                # вверх влево
+                if ((int(convertPosition(self.position, 'hc')[0])-1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-2) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])-2)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+
+                # вверх вправо
+                if ((int(convertPosition(self.position, 'hc')[0])+1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-2) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])-2)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+
+                # вправо вверх
+                if ((int(convertPosition(self.position, 'hc')[0])+2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-1) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])-1)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+                # вправо вниз
+                if ((int(convertPosition(self.position, 'hc')[0])+2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+1) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])+1)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+
+                # вниз влево
+                if ((int(convertPosition(self.position, 'hc')[0])-1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+2) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])+2)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+                # вниз вправо
+                if ((int(convertPosition(self.position, 'hc')[0])+1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+2) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])+2)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+
+                # влево вверх
+                if ((int(convertPosition(self.position, 'hc')[0])-2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-1) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])-1)
+                    possible_moves.append(convertPosition(pos, 'ch'))
+                
+                # влево вниз
+                if ((int(convertPosition(self.position, 'hc')[0])-2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+1) in range(0,8)):
+                    pos = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])+1)
+                    possible_moves.append(convertPosition(pos, 'ch'))
 
             case 'B':   # слон
                 pass
@@ -79,12 +128,11 @@ class Piece():
             case 'K':   # король
                 pass
 
-
         # проверки на то чтобы не уходил на лимит доски
         for i in possible_moves:
-            if int(i[1]) not in range(1,9):
+            if int(convertPosition(i,'hc')[0]) not in range(0,8):
                 possible_moves.pop(possible_moves.index(i))
-            if alph.index(i[0]) not in range(0,8):
+            elif int(convertPosition(i,'hc')[1]) not in range(0,8):
                 possible_moves.pop(possible_moves.index(i))
 
         return (possible_moves)
@@ -100,7 +148,7 @@ class Game():
 
         self.printField()
 
-        print(self.black_figures[0].possibleMoves())
+        print(f'Possible moves for {self.black_figures[8].getSkin(),  self.black_figures[8].getPosition()}: {self.black_figures[8].possibleMoves()}')
 
     def setPieces(self):
         # Документация наименования фигур
