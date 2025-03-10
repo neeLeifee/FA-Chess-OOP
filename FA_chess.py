@@ -170,10 +170,10 @@ class Game():
             Piece('w', 'P', 'H2'),  # пешка
 
             Piece('w', 'N', 'B1'),  # конь
-            Piece('w', 'N', 'F1'),  # конь
+            Piece('w', 'N', 'G1'),  # конь
 
             Piece('w', 'B', 'C1'),  # слон
-            Piece('w', 'B', 'G1'),  # слон
+            Piece('w', 'B', 'F1'),  # слон
 
             Piece('w', 'R', 'A1'),  # ладья
             Piece('w', 'R', 'H1'),  # ладья
@@ -192,10 +192,10 @@ class Game():
             Piece('b', 'P', 'H7'),  # пешка
 
             Piece('b', 'N', 'B8'),  # конь
-            Piece('b', 'N', 'F8'),  # конь
+            Piece('b', 'N', 'G8'),  # конь
 
             Piece('b', 'B', 'C8'),  # слон
-            Piece('b', 'B', 'G8'),  # слон
+            Piece('b', 'B', 'F8'),  # слон
 
             Piece('b', 'R', 'A8'),  # ладья
             Piece('b', 'R', 'H8'),  # ладья
