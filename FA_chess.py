@@ -206,6 +206,73 @@ class Piece():
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
 
             case 'Q':   # ферзь
+                # общая идея просчёта хода слона/ладьи/ферзя
+                # мы пускаем луч в каждую сторону пока не упрёмся в какую-то фигуру/край поля
+                # клетка, которую просчитываем на данной итерации - tmpMove
+
+                # вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = tmpMove[0] + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # вправо вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+                
+                # вправо
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + tmpMove[1]
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # вправо вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    
+                # вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = tmpMove[0] + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + tmpMove[1]
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
                 pass
 
             case 'K':   # король
@@ -231,7 +298,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[12].getSkin(),  self.black_figures[12].getPosition()}: {self.black_figures[12].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[14].getSkin(),  self.black_figures[14].getPosition()}: {self.black_figures[14].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
