@@ -14,7 +14,17 @@ def convertPosition(pos,mode):
         case _:
             return -1
         
-
+def isWithinField(pos, mode):
+    if len(pos) > 2: return False
+    match mode:
+        case 'h':
+            return isWithinField(convertPosition(pos, 'hc'), 'c')
+        case 'c':
+            if (int(pos[0]) in range(0,8)) and (int(pos[1]) in range(0,8)):
+                return True
+            else:
+                return False
+            
 class Table():
     def __init__(self,size): self.size = size
     #я хз какие ещё могут быть полЯ у пОля. вообще какой-то беспонтовый класс
@@ -56,8 +66,12 @@ class Piece():
     def getSkin(self):
         return self.skin
 
-    def possibleMoves(self):
+    def possibleMoves(self, white_figures, black_figures):
         possible_moves = []
+        existing_figures = []
+
+        for i in white_figures: existing_figures.append(i.getPosition())
+        for i in black_figures: existing_figures.append(i.getPosition())
 
         match self.type:
             case 'P':   # пешка
@@ -117,10 +131,79 @@ class Piece():
                     possible_moves.append(convertPosition(pos, 'ch'))
 
             case 'B':   # слон
-                pass
+                # общая идея просчёта хода слона/ладьи/ферзя
+                # мы пускаем луч в каждую сторону пока не упрёмся в какую-то фигуру/край поля
+                # клетка, которую просчитываем на данной итерации - tmpMove
+
+                # вправо вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # вправо вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
 
             case 'R':   # ладья
-                pass
+                # общая идея просчёта хода слона/ладьи/ферзя
+                # мы пускаем луч в каждую сторону пока не упрёмся в какую-то фигуру/край поля
+                # клетка, которую просчитываем на данной итерации - tmpMove
+
+                # вверх
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = tmpMove[0] + str(int(tmpMove[1])-1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # вправо
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])+1) + tmpMove[1]
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # вниз
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = tmpMove[0] + str(int(tmpMove[1])+1)
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
+
+                # влево
+                tmpMove = convertPosition(self.position, 'hc')
+                while True:
+                    tmpMove = str(int(tmpMove[0])-1) + tmpMove[1]
+                    if isWithinField(tmpMove, 'c') == False: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    possible_moves.append(convertPosition(tmpMove, 'ch'))
 
             case 'Q':   # ферзь
                 pass
@@ -148,7 +231,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[8].getSkin(),  self.black_figures[8].getPosition()}: {self.black_figures[8].possibleMoves()}')
+        print(f'Possible moves for {self.black_figures[12].getSkin(),  self.black_figures[12].getPosition()}: {self.black_figures[12].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
