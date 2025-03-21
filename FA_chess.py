@@ -132,11 +132,64 @@ class Game():
         for i in range(self.table.getSize()[0]): print(alph[i]+'  ', end='')
 
         print('\n')
+    
+    def white_move(self):
+        while True:
+            move = input("Your move('exit' to quit): ").strip().upper()
+            if move == "EXIT": exit()
+            if len(move) != 5 or move[2] != ' ':
+                print("Invalid move format. Please use the format 'E2 E4'.")
+
+            start_pos, end_pos = move.split()
+            piece = next((p for p in self.white_figures if p.getPosition() == start_pos), None)
+            if not piece:
+                print("No white piece at the starting position.")
+
+            possible_moves, moves_to_eat = piece.possibleMoves(self.white_figures, self.black_figures)
+            if end_pos not in possible_moves and end_pos not in moves_to_eat:
+                print("Invalid move for the selected piece.")
+
+            if end_pos in moves_to_eat:
+                self.black_figures = [p for p in self.black_figures if p.getPosition() != end_pos]
+                print(f"Captured black piece at {end_pos}!")
+
+            piece.setPosition(end_pos)
+            self.printField()
+            break
+
+    def black_move(self):
+        while True:
+            move = input("Your move('exit' to quit): ").strip().upper()
+            if move == "EXIT":
+                print("Exiting the game.")
+                exit()
+            if len(move) != 5 or move[2] != ' ':
+                print("Invalid move format. Use 'E7 E5'.")
+
+            start_pos, end_pos = move.split()
+            piece = next((p for p in self.black_figures if p.getPosition() == start_pos), None)
+            if not piece:
+                print("No black piece at the starting position.")
+
+            possible_moves, moves_to_eat = piece.possibleMoves(self.white_figures, self.black_figures)
+            if end_pos not in possible_moves and end_pos not in moves_to_eat:
+                print("Invalid move for the selected piece.")
+
+            if end_pos in moves_to_eat:
+                self.white_figures = [p for p in self.white_figures if p.getPosition() != end_pos]
+                print(f"Captured white piece at {end_pos}!")
+
+            piece.setPosition(end_pos)
+            self.printField()
+            break
         
 
 
 def main():
     print()
     game = Game()
+    while True:
+        game.white_move()
+        game.black_move()
     
 if __name__=="__main__":main()#lolnospaces
