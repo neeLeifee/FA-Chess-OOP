@@ -2,7 +2,7 @@
 from string import ascii_lowercase as lower_alph
 
 from common.piece import Piece
-from common.piece import Table
+from common.table import Table
 
 class Game():
     def __init__(self):

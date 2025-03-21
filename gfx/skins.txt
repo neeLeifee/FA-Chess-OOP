@@ -1,0 +1,19 @@
+# Skins are designed to be 2-character wide, so that they can be easily displayed on the board.
+# да я писал это сам и писал на английском ИЧО
+
+
+# white figures skins
+wP:♙
+wN:♘
+wB:♗
+wR:♖
+wQ:♕
+wK:♔
+
+# black figures skins
+bP:♟
+bN:♞
+bB:♝
+bR:♜
+bQ:♛
+bK:♚

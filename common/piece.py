@@ -5,7 +5,8 @@ class Piece():
         self.color = color
         self.type = type
         self.position = position
-        
+
+        # default skins
         pieces_skins = {
             'wP' : '♙',  # белая пешка
             'wN' : '♘',  # белый конь
@@ -21,12 +22,29 @@ class Piece():
             'bQ' : '♛',  # чёрный ферзь
             'bK' : '♚',  # чёрный король
         }
+        # importing custom skins from gfx folder
+        with open('gfx/skins.txt', 'r', encoding='utf-8') as file:
+            for line in file:
+                match line[:2]:
+                    case 'wP': pieces_skins['wP'] = line[3]
+                    case 'wN': pieces_skins['wN'] = line[3]
+                    case 'wB': pieces_skins['wB'] = line[3]
+                    case 'wR': pieces_skins['wR'] = line[3]
+                    case 'wQ': pieces_skins['wQ'] = line[3]
+                    case 'wK': pieces_skins['wK'] = line[3]
+
+                    case 'bP': pieces_skins['bP'] = line[3]
+                    case 'bN': pieces_skins['bN'] = line[3]
+                    case 'bB': pieces_skins['bB'] = line[3]
+                    case 'bR': pieces_skins['bR'] = line[3]
+                    case 'bQ': pieces_skins['bQ'] = line[3]
+                    case 'bK': pieces_skins['bK'] = line[3]
 
         self.skin = pieces_skins[self.color + self.type]
 
         self.white_pawns_spawns = ['A2','B2','C2','D2','E2','F2','G2','H2']
         self.black_pawns_spawns = ['A7','B7','C7','D7','E7','F7','G7','H7']
-    
+
     def getPosition(self):
         return self.position
     def setPosition(self, position):
