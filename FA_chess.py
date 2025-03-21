@@ -77,14 +77,28 @@ class Piece():
             case 'P':   # пешка
                 if self.color == 'w':
                     if self.position in self.white_pawns_spawns:   # if pawn is at its spawn point
-                        possible_moves.append(self.position[0] + str(int(self.position[1])+2))
+                        tmpMove = self.position[0] + str(int(self.position[1])+2)
+                        if isWithinField(tmpMove, 'h'):
+                            if tmpMove not in existing_figures:
+                                possible_moves.append(tmpMove)
+                    
+                    tmpMove = self.position[0] + str(int(self.position[1])+1)
+                    if isWithinField(tmpMove, 'h'):
+                        if tmpMove not in existing_figures:
+                            possible_moves.append(tmpMove)
 
-                    possible_moves.append(self.position[0] + str(int(self.position[1])+1))
-                else:
+
+                elif self.color == 'b':
                     if self.position in self.black_pawns_spawns:   # if pawn is at its spawn point
-                        possible_moves.append(self.position[0] + str(int(self.position[1])-2))
+                        tmpMove = self.position[0] + str(int(self.position[1])-2)
+                        if isWithinField(tmpMove, 'h'):
+                            if tmpMove not in existing_figures:
+                                possible_moves.append(tmpMove)
 
-                    possible_moves.append(self.position[0] + str(int(self.position[1])-1))
+                    tmpMove = self.position[0] + str(int(self.position[1])-1)
+                    if isWithinField(tmpMove, 'h'):
+                        if tmpMove not in existing_figures:
+                            possible_moves.append(tmpMove)
 
             case 'N':   # конь
                 # вверх влево
@@ -303,7 +317,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[8].getSkin(),  self.black_figures[8].getPosition()}: {self.black_figures[8].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[1].getSkin(),  self.black_figures[1].getPosition()}: {self.black_figures[1].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
