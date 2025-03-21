@@ -68,6 +68,7 @@ class Piece():
 
     def possibleMoves(self, white_figures, black_figures):
         possible_moves = []
+        moves_to_eat = []
         existing_figures = []
 
         for i in white_figures: existing_figures.append(i.getPosition())
