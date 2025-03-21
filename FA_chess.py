@@ -88,47 +88,52 @@ class Piece():
 
             case 'N':   # конь
                 # вверх влево
-                if ((int(convertPosition(self.position, 'hc')[0])-1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-2) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])-2)
-                    possible_moves.append(convertPosition(pos, 'ch'))
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])-2)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # вверх вправо
-                if ((int(convertPosition(self.position, 'hc')[0])+1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-2) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])-2)
-                    possible_moves.append(convertPosition(pos, 'ch'))
-                
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])-2)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # вправо вверх
-                if ((int(convertPosition(self.position, 'hc')[0])+2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-1) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])-1)
-                    possible_moves.append(convertPosition(pos, 'ch'))
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])-1)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
                 
                 # вправо вниз
-                if ((int(convertPosition(self.position, 'hc')[0])+2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+1) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])+1)
-                    possible_moves.append(convertPosition(pos, 'ch'))
-                
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])+1)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # вниз влево
-                if ((int(convertPosition(self.position, 'hc')[0])-1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+2) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])+2)
-                    possible_moves.append(convertPosition(pos, 'ch'))
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])+2)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
                 
                 # вниз вправо
-                if ((int(convertPosition(self.position, 'hc')[0])+1) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+2) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])+2)
-                    possible_moves.append(convertPosition(pos, 'ch'))
-                
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])+2)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # влево вверх
-                if ((int(convertPosition(self.position, 'hc')[0])-2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])-1) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])-1)
-                    possible_moves.append(convertPosition(pos, 'ch'))
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])-1)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
                 
                 # влево вниз
-                if ((int(convertPosition(self.position, 'hc')[0])-2) in range(0,8)) and ((int(convertPosition(self.position, 'hc')[1])+1) in range(0,8)):
-                    pos = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])+1)
-                    possible_moves.append(convertPosition(pos, 'ch'))
+                tmpMove = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])+1)
+                if isWithinField(tmpMove, 'c'):
+                    if convertPosition(tmpMove, 'ch') not in existing_figures:
+                        possible_moves.append(convertPosition(tmpMove, 'ch'))
 
             case 'B':   # слон
                 # общая идея просчёта хода слона/ладьи/ферзя
@@ -298,7 +303,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[14].getSkin(),  self.black_figures[14].getPosition()}: {self.black_figures[14].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[8].getSkin(),  self.black_figures[8].getPosition()}: {self.black_figures[8].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
