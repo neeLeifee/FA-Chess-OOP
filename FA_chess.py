@@ -325,10 +325,23 @@ class Piece():
                     if isWithinField(tmpMove, 'c') == False: break
                     elif convertPosition(tmpMove, 'ch') in existing_figures: break
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
-                pass
 
             case 'K':   # король
-                pass
+                directions = [
+                    (0, -1), (1, -1), (1, 0), (1, 1),
+                    (0, 1), (-1, 1), (-1, 0), (-1, -1)
+                ]
+                for direction in directions:
+                    tmpMove = str(int(convertPosition(self.position, 'hc')[0]) + direction[0]) + str(int(convertPosition(self.position, 'hc')[1]) + direction[1])
+                    if isWithinField(tmpMove, 'c'):
+                        tmpMove = convertPosition(tmpMove, 'ch')
+                        if tmpMove not in existing_figures:
+                            possible_moves.append(tmpMove)
+                        elif self.color == 'w' and tmpMove in black_figures_pos:
+                            moves_to_eat.append(tmpMove)
+                        elif self.color == 'b' and tmpMove in white_figures_pos:
+                            moves_to_eat.append(tmpMove)
+
 
         return (possible_moves, moves_to_eat)
 
@@ -343,7 +356,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[0].getSkin(),  self.black_figures[0].getPosition()}: {self.black_figures[0].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[15].getSkin(),  self.black_figures[15].getPosition()}: {self.black_figures[15].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
