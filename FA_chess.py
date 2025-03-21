@@ -71,6 +71,12 @@ class Piece():
         moves_to_eat = []
         existing_figures = []
 
+        white_figures_pos = []
+        black_figures_pos = []
+
+        for i in white_figures: white_figures_pos.append(i.getPosition())
+        for i in black_figures: black_figures_pos.append(i.getPosition())
+
         for i in white_figures: existing_figures.append(i.getPosition())
         for i in black_figures: existing_figures.append(i.getPosition())
 
@@ -78,28 +84,54 @@ class Piece():
             case 'P':   # пешка
                 if self.color == 'w':
                     if self.position in self.white_pawns_spawns:   # if pawn is at its spawn point
+                        # движение на две клетки вперёд
                         tmpMove = self.position[0] + str(int(self.position[1])+2)
                         if isWithinField(tmpMove, 'h'):
                             if tmpMove not in existing_figures:
                                 possible_moves.append(tmpMove)
                     
+                    # движение на одну клетку вперёд
                     tmpMove = self.position[0] + str(int(self.position[1])+1)
                     if isWithinField(tmpMove, 'h'):
                         if tmpMove not in existing_figures:
                             possible_moves.append(tmpMove)
+                    
+                    # хавалка вниз влево
+                    tmpMove = str(int(convertPosition(self.position, 'hc')[0]) + 1) + str(int(convertPosition(self.position, 'hc')[1]) + 1)
+                    if isWithinField(tmpMove, 'c'):
+                        if convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    # хавалка вниз вправо
+                    tmpMove = str(int(convertPosition(self.position, 'hc')[0]) - 1) + str(int(convertPosition(self.position, 'hc')[1]) + 1)
+                    if isWithinField(tmpMove, 'c'):
+                        if convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
 
                 elif self.color == 'b':
                     if self.position in self.black_pawns_spawns:   # if pawn is at its spawn point
+                        # движение на две клетки вперёд
                         tmpMove = self.position[0] + str(int(self.position[1])-2)
                         if isWithinField(tmpMove, 'h'):
                             if tmpMove not in existing_figures:
                                 possible_moves.append(tmpMove)
 
+                    # движение на одну клетку вперёд
                     tmpMove = self.position[0] + str(int(self.position[1])-1)
                     if isWithinField(tmpMove, 'h'):
                         if tmpMove not in existing_figures:
                             possible_moves.append(tmpMove)
+
+                    # хавалка вверх вправо
+                    tmpMove = str(int(convertPosition(self.position, 'hc')[0]) - 1) + str(int(convertPosition(self.position, 'hc')[1]) - 1)
+                    if isWithinField(tmpMove, 'c'):
+                        if convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    # хавалка вверх влево
+                    tmpMove = str(int(convertPosition(self.position, 'hc')[0]) + 1) + str(int(convertPosition(self.position, 'hc')[1]) - 1)
+                    if isWithinField(tmpMove, 'c'):
+                        if convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
             case 'N':   # конь
                 # вверх влево
@@ -298,14 +330,7 @@ class Piece():
             case 'K':   # король
                 pass
 
-        # проверки на то чтобы не уходил на лимит доски
-        for i in possible_moves:
-            if int(convertPosition(i,'hc')[0]) not in range(0,8):
-                possible_moves.pop(possible_moves.index(i))
-            elif int(convertPosition(i,'hc')[1]) not in range(0,8):
-                possible_moves.pop(possible_moves.index(i))
-
-        return (possible_moves)
+        return (possible_moves, moves_to_eat)
 
 class Game():
     def __init__(self):
@@ -318,7 +343,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[1].getSkin(),  self.black_figures[1].getPosition()}: {self.black_figures[1].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[0].getSkin(),  self.black_figures[0].getPosition()}: {self.black_figures[0].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
