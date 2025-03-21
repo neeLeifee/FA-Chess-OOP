@@ -139,48 +139,80 @@ class Piece():
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
                 # вверх вправо
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])-2)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
                 # вправо вверх
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])-1)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
                 
                 # вправо вниз
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])+2) + str(int(convertPosition(self.position, 'hc')[1])+1)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
                 # вниз влево
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])-1) + str(int(convertPosition(self.position, 'hc')[1])+2)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
                 
                 # вниз вправо
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])+1) + str(int(convertPosition(self.position, 'hc')[1])+2)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
                 # влево вверх
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])-1)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
                 
                 # влево вниз
                 tmpMove = str(int(convertPosition(self.position, 'hc')[0])-2) + str(int(convertPosition(self.position, 'hc')[1])+1)
                 if isWithinField(tmpMove, 'c'):
                     if convertPosition(tmpMove, 'ch') not in existing_figures:
                         possible_moves.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                    elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                        moves_to_eat.append(convertPosition(tmpMove, 'ch'))
 
             case 'B':   # слон
                 # общая идея просчёта хода слона/ладьи/ферзя
