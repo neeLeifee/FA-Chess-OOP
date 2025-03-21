@@ -282,7 +282,12 @@ class Piece():
                 while True:
                     tmpMove = tmpMove[0] + str(int(tmpMove[1])-1)
                     if isWithinField(tmpMove, 'c') == False: break
-                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: 
+                        if self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        break
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # вправо
@@ -290,7 +295,12 @@ class Piece():
                 while True:
                     tmpMove = str(int(tmpMove[0])+1) + tmpMove[1]
                     if isWithinField(tmpMove, 'c') == False: break
-                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: 
+                        if self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        break
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # вниз
@@ -298,7 +308,12 @@ class Piece():
                 while True:
                     tmpMove = tmpMove[0] + str(int(tmpMove[1])+1)
                     if isWithinField(tmpMove, 'c') == False: break
-                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: 
+                        if self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        break
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
 
                 # влево
@@ -306,7 +321,12 @@ class Piece():
                 while True:
                     tmpMove = str(int(tmpMove[0])-1) + tmpMove[1]
                     if isWithinField(tmpMove, 'c') == False: break
-                    elif convertPosition(tmpMove, 'ch') in existing_figures: break
+                    elif convertPosition(tmpMove, 'ch') in existing_figures: 
+                        if self.color == 'w' and convertPosition(tmpMove, 'ch') in black_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        elif self.color == 'b' and convertPosition(tmpMove, 'ch') in white_figures_pos:
+                            moves_to_eat.append(convertPosition(tmpMove, 'ch'))
+                        break
                     possible_moves.append(convertPosition(tmpMove, 'ch'))
 
             case 'Q':   # ферзь
@@ -408,7 +428,7 @@ class Game():
 
         self.printField()
 
-        print(f'Possible moves for {self.black_figures[10].getSkin(),  self.black_figures[10].getPosition()}: {self.black_figures[10].possibleMoves(self.white_figures, self.black_figures)}')
+        print(f'Possible moves for {self.black_figures[13].getSkin(),  self.black_figures[13].getPosition()}: {self.black_figures[13].possibleMoves(self.white_figures, self.black_figures)}')
 
     def setPieces(self):
         # Документация наименования фигур
