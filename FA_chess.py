@@ -8,6 +8,7 @@ class Game():
     def __init__(self):
         self.table = Table([8,8])
 
+        self.turn_counter = 0
         self.white_score = 0
         self.black_score = 0
 
